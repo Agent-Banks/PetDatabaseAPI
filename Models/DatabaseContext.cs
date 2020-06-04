@@ -8,7 +8,7 @@ namespace PetDatabaseAPI.Models
     public partial class DatabaseContext : DbContext
     {
 
-        public DatabaseContext<Pet> Pets { get; set; }
+        public DbSet<Pet> Pets { get; set; }
 
         // Change this if you want to have a different database name in development
         private static string DEVELOPMENT_DATABASE_NAME = "PetDatabaseAPIDatabase";
