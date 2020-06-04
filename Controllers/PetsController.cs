@@ -11,6 +11,12 @@ namespace PetDatabaseAPI.Controllers
     [Route("[controller]")]
     public class PetsController : ControllerBase
     {
+        private readonly DatabaseContext _context;
 
+        //Constructor
+        public PetsController(DatabaseContext context)
+        {
+            _context = context;
+        }
     }
 }
