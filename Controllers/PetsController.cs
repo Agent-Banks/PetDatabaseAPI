@@ -4,6 +4,7 @@ using PetDatabaseAPI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System;
 
 namespace PetDatabaseAPI.Controllers
 {
@@ -39,6 +40,45 @@ namespace PetDatabaseAPI.Controllers
             }
 
             return Ok(pet);
+        }
+
+        [HttpPost]
+        public ActionResult<Pet> Create(Pet petToCreate)
+        {
+            if (petToCreate.HungerLevel != 0)
+            {
+                var errorMessage = new
+                {
+                    message = $"You requested the hunger level to be {petToCreate.HungerLevel} but it needs to start at 0."
+                };
+
+                return UnprocessableEntity(errorMessage);
+            }
+
+            if (petToCreate.HappinessLevel != 0)
+            {
+                var errorMessage = new
+                {
+                    message = $"You requested the happiness level to be {petToCreate.HappinessLevel} but it needs to start at 0."
+                };
+
+                return UnprocessableEntity(errorMessage);
+            }
+
+            if (petToCreate.Birthday != DateTime.Now)
+            {
+                var errorMessage = new
+                {
+                    message = $"You requested the birthday to be {petToCreate.Birthday} but it needs to be todays date."
+                };
+
+                return UnprocessableEntity(errorMessage);
+            }
+
+            _context.Pets.Add(petToCreate);
+            _context.SaveChanges();
+
+            return CreatedAtAction(null, null, petToCreate);
         }
 
         [HttpDelete("{id}")]
