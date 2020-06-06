@@ -110,8 +110,25 @@ namespace PetDatabaseAPI.Controllers
                 return NotFound();
             }
 
-            petThatIsLiveInTheDatabase.HappinessLevel -= 3;
-            petThatIsLiveInTheDatabase.HungerLevel -= 5;
+            if (petThatIsLiveInTheDatabase.HappinessLevel < 3)
+            {
+                petThatIsLiveInTheDatabase.HappinessLevel = 0;
+            }
+
+            else
+            {
+                petThatIsLiveInTheDatabase.HappinessLevel -= 3;
+            }
+
+            if (petThatIsLiveInTheDatabase.HungerLevel < 5)
+            {
+                petThatIsLiveInTheDatabase.HappinessLevel = 0;
+            }
+
+            else
+            {
+                petThatIsLiveInTheDatabase.HungerLevel -= 5;
+            }
 
             _context.Entry(petThatIsLiveInTheDatabase).State = EntityState.Modified;
             _context.SaveChanges();
@@ -129,7 +146,15 @@ namespace PetDatabaseAPI.Controllers
                 return NotFound();
             }
 
-            petThatIsLiveInTheDatabase.HappinessLevel -= 5;
+            if (petThatIsLiveInTheDatabase.HappinessLevel < 5)
+            {
+                petThatIsLiveInTheDatabase.HappinessLevel = 0;
+            }
+
+            else
+            {
+                petThatIsLiveInTheDatabase.HappinessLevel -= 5;
+            }
 
             _context.Entry(petThatIsLiveInTheDatabase).State = EntityState.Modified;
             _context.SaveChanges();
