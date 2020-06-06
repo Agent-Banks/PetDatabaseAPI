@@ -65,7 +65,7 @@ namespace PetDatabaseAPI.Controllers
                 return UnprocessableEntity(errorMessage);
             }
 
-            if (petToCreate.Birthday != DateTime.Now)
+            if (petToCreate.Birthday != DateTime.Today)
             {
                 var errorMessage = new
                 {
@@ -79,6 +79,62 @@ namespace PetDatabaseAPI.Controllers
             _context.SaveChanges();
 
             return CreatedAtAction(null, null, petToCreate);
+        }
+
+        [HttpPost("{id}/playtimes")]
+        public ActionResult<Pet> playTimeUpdate(int id, string playtimes)
+        {
+            var petThatIsLiveInTheDatabase = _context.Pets.FirstOrDefault(pet => pet.Id == id);
+
+            if (petThatIsLiveInTheDatabase == null)
+            {
+                return NotFound();
+            }
+
+            petThatIsLiveInTheDatabase.HappinessLevel += 5;
+            petThatIsLiveInTheDatabase.HungerLevel += 3;
+
+            _context.Entry(petThatIsLiveInTheDatabase).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok(petThatIsLiveInTheDatabase);
+        }
+
+        [HttpPost("{id}/feedings")]
+        public ActionResult<Pet> feedingsUpdate(int id, string feedings)
+        {
+            var petThatIsLiveInTheDatabase = _context.Pets.FirstOrDefault(pet => pet.Id == id);
+
+            if (petThatIsLiveInTheDatabase == null)
+            {
+                return NotFound();
+            }
+
+            petThatIsLiveInTheDatabase.HappinessLevel -= 3;
+            petThatIsLiveInTheDatabase.HungerLevel -= 5;
+
+            _context.Entry(petThatIsLiveInTheDatabase).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok(petThatIsLiveInTheDatabase);
+        }
+
+        [HttpPost("{id}/scoldings")]
+        public ActionResult<Pet> scoldingsUpdate(int id, string scoldings)
+        {
+            var petThatIsLiveInTheDatabase = _context.Pets.FirstOrDefault(pet => pet.Id == id);
+
+            if (petThatIsLiveInTheDatabase == null)
+            {
+                return NotFound();
+            }
+
+            petThatIsLiveInTheDatabase.HappinessLevel -= 5;
+
+            _context.Entry(petThatIsLiveInTheDatabase).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Ok(petThatIsLiveInTheDatabase);
         }
 
         [HttpDelete("{id}")]
