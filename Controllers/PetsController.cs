@@ -45,6 +45,22 @@ namespace PetDatabaseAPI.Controllers
         [HttpPost]
         public ActionResult<Pet> Create(Pet petToCreate)
         {
+            var newPet = new Pet()
+            {
+                Name = petToCreate.Name,
+                Birthday = DateTime.Now
+            };
+
+            if (petToCreate.Birthday != null)
+            {
+                var errorMessage = new
+                {
+                    message = $"You requested the birthday to be {petToCreate.Birthday} but it needs to be todays date."
+                };
+
+                return UnprocessableEntity(errorMessage);
+            }
+
             if (petToCreate.HungerLevel != 0)
             {
                 var errorMessage = new
@@ -65,20 +81,10 @@ namespace PetDatabaseAPI.Controllers
                 return UnprocessableEntity(errorMessage);
             }
 
-            if (petToCreate.Birthday != DateTime.Today)
-            {
-                var errorMessage = new
-                {
-                    message = $"You requested the birthday to be {petToCreate.Birthday} but it needs to be todays date."
-                };
-
-                return UnprocessableEntity(errorMessage);
-            }
-
-            _context.Pets.Add(petToCreate);
+            _context.Pets.Add(newPet);
             _context.SaveChanges();
 
-            return CreatedAtAction(null, null, petToCreate);
+            return CreatedAtAction(null, null, newPet);
         }
 
         [HttpPost("{id}/playtimes")]
