@@ -128,7 +128,7 @@ namespace PetDatabaseAPI.Controllers
 
             if (petThatIsLiveInTheDatabase.HungerLevel < 5)
             {
-                petThatIsLiveInTheDatabase.HappinessLevel = 0;
+                petThatIsLiveInTheDatabase.HungerLevel = 0;
             }
 
             else
