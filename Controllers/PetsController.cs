@@ -55,7 +55,7 @@ namespace PetDatabaseAPI.Controllers
             {
                 var errorMessage = new
                 {
-                    message = $"You requested the birthday to be {petToCreate.Birthday} but it needs to be todays date."
+                    message = $"You requested the birthday to be {petToCreate.Birthday} but this is a default value. Please leave this field blank."
                 };
 
                 return UnprocessableEntity(errorMessage);
@@ -65,7 +65,7 @@ namespace PetDatabaseAPI.Controllers
             {
                 var errorMessage = new
                 {
-                    message = $"You requested the hunger level to be {petToCreate.HungerLevel} but it needs to start at 0."
+                    message = $"You requested the hunger level to be {petToCreate.HungerLevel} but it needs to start at 0. Please leave this field blank."
                 };
 
                 return UnprocessableEntity(errorMessage);
@@ -75,7 +75,7 @@ namespace PetDatabaseAPI.Controllers
             {
                 var errorMessage = new
                 {
-                    message = $"You requested the happiness level to be {petToCreate.HappinessLevel} but it needs to start at 0."
+                    message = $"You requested the happiness level to be {petToCreate.HappinessLevel} but it needs to start at 0. Please leave this field blank."
                 };
 
                 return UnprocessableEntity(errorMessage);
